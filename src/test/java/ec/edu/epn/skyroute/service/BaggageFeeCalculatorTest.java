@@ -75,5 +75,22 @@ class BaggageFeeCalculatorTest {
 
     }
 
+    @Test
+    @DisplayName("VIP con 2 maletas - Solo la primera maleta es gratis")
+    void deberiaCobrar30_CuandoEsVIPConDosMaletasEstandar() {
+//        ARRANGE
+        Long passengerId = 4L;
+        double weight = 10.0;
+        int bagCount = 2;
+        when(passengerService.isVip(passengerId)).thenReturn(true);
+
+//        ACT
+        double result = calculator.calculateFee(weight, bagCount, passengerId);
+
+//        ASSERT
+        assertEquals(30.0, result, "El beneficio VIP solo debe aplicar a la primera maleta");
+    }
+
+
 
 }
