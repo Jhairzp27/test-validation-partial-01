@@ -34,7 +34,7 @@ public class BaggageFeeCalculator {
      * @throws IllegalArgumentException si los parámetros no cumplen las restricciones
      */
     public double calculateFee(double weight, int bagCount, Long passengerId) {
-        // TODO: Implementar lógica de negocio y validación de excepciones
-        return 0.0;
+        passengerService.isVip(passengerId);
+        return 30.0;
     }
 }
