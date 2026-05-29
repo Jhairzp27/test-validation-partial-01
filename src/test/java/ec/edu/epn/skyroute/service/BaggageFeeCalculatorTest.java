@@ -56,5 +56,24 @@ class BaggageFeeCalculatorTest {
     }
 
 
+    @Test
+    @ExtendWith(MockitoExtension.class)
+    @DisplayName("Beneficio VIP - 1 maleta, 15 kg, pasajero VIP")
+    void deberiaCobrar0_CuandoEsPasajeroVIPYMaletaEstandar() {
+//        ARRANGE
+        Long passengerId = 1L;
+        double weight = 25.0;
+        int bagCount = 1;
+
+        when(passengerService.isVip(passengerId)).thenReturn(true);
+
+//        ACT
+        double result = calculator.calculateFee(weight, bagCount, passengerId);
+
+//        ASSERT
+        assertEquals(0.0, result, "El beneficio VIP debe cubrir el costo total de la primera maleta estándar");
+
+    }
+
 
 }
