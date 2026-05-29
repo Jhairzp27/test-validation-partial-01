@@ -41,7 +41,7 @@ class BaggageFeeCalculatorTest {
     void deberiaCobrar80_CuandoHayExcesoDePesoYPasajeroRegular() {
 //        ARRANGE
         Long passengerId = 1L;
-        double weight = 20.0;
+        double weight = 25.0;
         int bagCount = 1;
 
         when(passengerService.isVip(passengerId)).thenReturn(false);
