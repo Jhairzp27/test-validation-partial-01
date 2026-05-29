@@ -18,6 +18,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class BaggageFeeCalculator {
 
+    private static final double BASE_FEE = 0.0;
+    private static final double WEIGHT_LIMIT = 0.0;
+    private static final double EXCESS_WEIGHT_FEE = 0.0;
+
     private final PassengerService passengerService;
 
     public BaggageFeeCalculator(PassengerService passengerService) {
@@ -34,14 +38,28 @@ public class BaggageFeeCalculator {
      * @throws IllegalArgumentException si los parámetros no cumplen las restricciones
      */
     public double calculateFee(double weight, int bagCount, Long passengerId) {
-        passengerService.isVip(passengerId);
 
-        double fee = 30.0;
+        boolean isVip = passengerService.isVip(passengerId);
+        double totalFee = 0.0;
 
-        if (weight > 23.0){
-            fee += 50.0;
+        for (int i = 1; i <= bagCount; i++) {
+            double currentBagFee = BASE_FEE;
+
+//             Primera maleta gratis si es VIP y peso <= límite
+            boolean isElegibleForVipBenefits = i == 1 && isVip && weight <= WEIGHT_LIMIT;
+            if (isElegibleForVipBenefits) {
+                currentBagFee = 0.0;
+            }
+
+//          Exceso de peso
+            if (weight > WEIGHT_LIMIT) {
+                currentBagFee += EXCESS_WEIGHT_FEE;
+            }
+
+            totalFee += currentBagFee;
         }
 
-        return fee;
+        return totalFee;
     }
+
 }
