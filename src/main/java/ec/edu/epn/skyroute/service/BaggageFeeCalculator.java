@@ -35,6 +35,13 @@ public class BaggageFeeCalculator {
      */
     public double calculateFee(double weight, int bagCount, Long passengerId) {
         passengerService.isVip(passengerId);
-        return 30.0;
+
+        double fee = 80.0;
+
+        if (weight > 23.0){
+            fee += 50.0;
+        }
+
+        return fee;
     }
 }
